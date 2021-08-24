@@ -6,17 +6,6 @@ CACHE_DIR=${2}
 DEPS_DIR=${3}
 INDEX=${4}
 
-LAUNCH_CONTENTS='---
-processes:
-- type: "sidecar_process"
-  command: "while true; do echo hello from a sidecar process; sleep 10; done"
-  platforms:
-    cloudfoundry:
-      sidecar_for: [ "web"]
-'
-
-echo "-----> Running sidecar supply"
-
 BUILDPACK_DIR=$(dirname $(readlink -f ${BASH_SOURCE%/*}))
 
 echo "BUILDPACK_DIR = ${BUILDPACK_DIR}"
@@ -34,6 +23,19 @@ FILE_TO_SOURCE_FOR_APP="${BUILD_DIR}/.profile.d/source_me.sh"
 
 echo "export PATH_TO_HELLO_ROY=/home/vcap/deps/${INDEX}/hello_roy.txt" > "${FILE_TO_SOURCE_FOR_APP}"
 
-pushd "$BUILDPACK_DIR"
+LAUNCH_CONTENTS='---
+processes:
+- type: "sidecar_process"
+  command: "while true; do echo hello from a sidecar process; sleep 10; done"
+  platforms:
+    cloudfoundry:
+      sidecar_for: [ "web"]
+'
+
+echo "-----> Running sidecar supply"
+
+export SIDECAR_DIR=$(dirname $(readlink -f ${BASH_SOURCE%/*}))
+
+pushd "$SIDECAR_DIR"
   echo "$LAUNCH_CONTENTS" > "$DEPS_DIR"/"$DEPS_IDX"/launch.yml
 popd
