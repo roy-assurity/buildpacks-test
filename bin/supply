@@ -20,4 +20,6 @@ popd
 
 mkdir -p "${BUILD_DIR}/.profile.d"
 HELLO_ROY_PATH="${BUILD_DIR}/.profile.d/source_me.sh"
-echo "export PATH_TO_HELLO_ROY=/var/vcap/deps/${INDEX}/hello_roy.txt" > "${HELLO_ROY_PATH}"
+
+# FIX to correct path whee hello_roy.txt really is.
+echo "export PATH_TO_HELLO_ROY=/home/vcap/deps/${INDEX}/hello_roy.txt" > "${HELLO_ROY_PATH}"
