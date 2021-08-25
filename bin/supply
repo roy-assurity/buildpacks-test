@@ -22,11 +22,14 @@ mkdir -p "${BUILD_DIR}/.profile.d"
 FILE_TO_SOURCE_FOR_APP="${BUILD_DIR}/.profile.d/source_me.sh"
 
 echo "export PATH_TO_HELLO_ROY=/home/vcap/deps/${INDEX}/hello_roy.txt" > "${FILE_TO_SOURCE_FOR_APP}"
+echo "export PATH_TO_SIDECAR_SCRIPT=/home/vcap/deps/${INDEX}/sidecar-hello.sh" > "${FILE_TO_SOURCE_FOR_APP}"
+
+echo "PATH_TO_SIDECAR_SCRIPT will => ${PATH_TO_SIDECAR_SCRIPT}"
 
 LAUNCH_CONTENTS='---
 processes:
 - type: "sidecar_process"
-  command: "cd bin; ls -lart"
+  command: "ls -lart && cd ${PATH_TO_SIDECAR_SCRIPT} && ls -lart"
   platforms:
     cloudfoundry:
       sidecar_for: [ "web"]
