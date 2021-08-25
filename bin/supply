@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -eo pipefail # sets the script to fail based on command fail
 
 BUILD_DIR=${1}
 CACHE_DIR=${2}
@@ -21,7 +21,7 @@ popd
 LAUNCH_CONTENTS='---
 processes:
 - type: "sidecar_process"
-  command: "echo hello from sidecar process, about to run sidecar script... && ${PATH_TO_SIDECAR_SCRIPT} && sleep infinity"
+  command: "echo hello from sidecar process, about to run sidecar script... && ${PATH_TO_SIDECAR_SCRIPT}"
   platforms:
     cloudfoundry:
       sidecar_for: [ "web"]
