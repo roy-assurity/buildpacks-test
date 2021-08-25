@@ -18,16 +18,10 @@ pushd "${DEPS_DIR}/${INDEX}"
   echo 'Hello Roy' > hello_roy.txt
 popd
 
-mkdir -p "${BUILD_DIR}/.profile.d"
-FILE_TO_SOURCE_FOR_APP="${BUILD_DIR}/.profile.d/source_me.sh"
-
-echo "export PATH_TO_HELLO_ROY=/home/vcap/deps/${INDEX}/hello_roy.txt" > "${FILE_TO_SOURCE_FOR_APP}"
-echo "export PATH_TO_SIDECAR_SCRIPT=/home/vcap/deps/${INDEX}/sidecar-hello.sh" > "${FILE_TO_SOURCE_FOR_APP}"
-
 LAUNCH_CONTENTS='---
 processes:
 - type: "sidecar_process"
-  command: "echo hello from sidecar process && sleep infinity"
+  command: "echo hello from sidecar process && cat ${PATH_TO_SIDECAR_SCRIPT} && sleep infinity"
   platforms:
     cloudfoundry:
       sidecar_for: [ "web"]
@@ -45,6 +39,12 @@ pushd "$BUILDPACK_DIR"
   echo "$LAUNCH_CONTENTS" > "${DEPS_DIR}/${INDEX}/launch.yml"
   cp sidecar-hello.sh "${DEPS_DIR}/${INDEX}/sidecar-hello.sh"
 popd
+
+mkdir -p "${BUILD_DIR}/.profile.d"
+FILE_TO_SOURCE_FOR_APP="${BUILD_DIR}/.profile.d/source_me.sh"
+
+echo "export PATH_TO_HELLO_ROY=/home/vcap/deps/${INDEX}/hello_roy.txt" > "${FILE_TO_SOURCE_FOR_APP}"
+echo "export PATH_TO_SIDECAR_SCRIPT=/home/vcap/deps/${INDEX}/sidecar-hello.sh" >> "${FILE_TO_SOURCE_FOR_APP}"
 
 
 #export BUILDPACK_DIR=`dirname $(readlink -f ${BASH_SOURCE%/*})`
