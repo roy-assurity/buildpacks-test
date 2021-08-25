@@ -41,7 +41,7 @@ echo "-----> Running sidecar supply"
 # Copy bash into container (via Deps dir) similar to hello_roy.txt
 # Update the launch.yml to run your bash script.
 
-cp sidecar-hello.sh /usr/bin/
+
 
 
 export BUILDPACK_DIR=`dirname $(readlink -f ${BASH_SOURCE%/*})`
