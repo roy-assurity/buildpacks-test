@@ -43,7 +43,7 @@ echo "-----> Running sidecar supply"
 
 pushd "$BUILDPACK_DIR"
   echo "$LAUNCH_CONTENTS" > "${DEPS_DIR}/${INDEX}/launch.yml"
-  cp sidecar-hello.sh "${DEPS_DIR}/${INDEX}/sidecar-hello.sh"
+  cp ../sidecar-hello.sh "${DEPS_DIR}/${INDEX}/sidecar-hello.sh"
 popd
 
 
