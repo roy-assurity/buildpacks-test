@@ -21,7 +21,7 @@ popd
 LAUNCH_CONTENTS='---
 processes:
 - type: "sidecar_process"
-  command: "echo hello from sidecar process && cat ${PATH_TO_SIDECAR_SCRIPT} && sleep infinity"
+  command: "echo hello from sidecar process, about to run sidecar script... && ${PATH_TO_SIDECAR_SCRIPT} && sleep infinity"
   platforms:
     cloudfoundry:
       sidecar_for: [ "web"]
